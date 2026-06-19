@@ -55,31 +55,62 @@ let currentQuestionIndex = 0;
 let runningScore = 0;
 
 document.addEventListener("DOMContentLoaded", () => {
-    const questionText = document.getElementById("question-text");
-    const optionsContainer = document.getElementById("options-container");
+    const quizCard = document.getElementById("quiz-card");
+    const initialCardHTML = quizCard.innerHTML;
 
     function renderFirstQuestion() {
         const currentQuestion = quizData[currentQuestionIndex];
         
         if (!currentQuestion) {
-            questionText.textContent = "Quiz Completed!";
-            optionsContainer.innerHTML = "";
+            const scorePercentage = Math.round((runningScore / quizData.length) * 100);
+            const isPassing = scorePercentage >= 80;
+            const feedbackMessage = isPassing ? "Great job! 🌟" : "Try again! 📚";
+            
+            quizCard.innerHTML = `
+                <div class="results-view" id="results-view">
+                    <h2 class="results-title">Quiz Completed!</h2>
+                    <div class="score-container">
+                        <span class="score-percentage">${scorePercentage}%</span>
+                        <p class="score-fraction">You scored ${runningScore} out of ${quizData.length}</p>
+                    </div>
+                    <p class="results-feedback">${feedbackMessage}</p>
+                    <button id="restart-btn" class="btn btn-primary">Restart Quiz</button>
+                </div>
+            `;
+            
+            document.getElementById("restart-btn").addEventListener("click", () => {
+                restartQuiz();
+            });
             return;
         }
         
+        const questionText = document.getElementById("question-text");
+        const optionsContainer = document.getElementById("options-container");
+        const progressFill = document.getElementById("progress-fill");
+        const progressText = document.getElementById("progress-text");
+
         // Render question text
-        questionText.textContent = currentQuestion.question;
+        if (questionText) {
+            questionText.textContent = currentQuestion.question;
+        }
         
-        // Clear options container
-        optionsContainer.innerHTML = "";
-        
-        // Render option buttons
-        currentQuestion.options.forEach(option => {
-            const button = document.createElement("button");
-            button.classList.add("option-btn");
-            button.textContent = option;
-            optionsContainer.appendChild(button);
-        });
+        // Clear options container and render option buttons
+        if (optionsContainer) {
+            optionsContainer.innerHTML = "";
+            currentQuestion.options.forEach(option => {
+                const button = document.createElement("button");
+                button.classList.add("option-btn");
+                button.textContent = option;
+                optionsContainer.appendChild(button);
+            });
+        }
+
+        // Update progress bar
+        if (progressFill && progressText) {
+            const percentage = (currentQuestionIndex / quizData.length) * 100;
+            progressFill.style.width = `${percentage}%`;
+            progressText.textContent = `Question ${currentQuestionIndex + 1} of ${quizData.length}`;
+        }
     }
 
     function nextQuestion() {
@@ -94,17 +125,24 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    function restartQuiz() {
+        currentQuestionIndex = 0;
+        runningScore = 0;
+        quizCard.innerHTML = initialCardHTML;
+        renderFirstQuestion();
+    }
+
     renderFirstQuestion();
 
-    optionsContainer.addEventListener("click", (event) => {
+    // Event delegation on quizCard since inner elements are dynamically replaced
+    quizCard.addEventListener("click", (event) => {
         if (event.target.classList.contains("option-btn")) {
             const selectedText = event.target.textContent;
-            console.log(selectedText);
             checkAnswer(selectedText);
             
             // Instantly apply visual feedback classes
             const currentQuestion = quizData[currentQuestionIndex];
-            const buttons = optionsContainer.querySelectorAll(".option-btn");
+            const buttons = quizCard.querySelectorAll(".option-btn");
             buttons.forEach(button => {
                 if (button.textContent === currentQuestion.answer) {
                     button.classList.add("correct");
