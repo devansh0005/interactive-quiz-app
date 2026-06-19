@@ -77,5 +77,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     renderFirstQuestion();
+
+    optionsContainer.addEventListener("click", (event) => {
+        if (event.target.classList.contains("option-btn")) {
+            console.log(event.target.textContent);
+        }
+    });
 });
 
