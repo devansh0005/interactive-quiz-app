@@ -51,6 +51,9 @@ const quizData = [
     }
 ];
 
+let currentQuestionIndex = 0;
+let runningScore = 0;
+
 document.addEventListener("DOMContentLoaded", () => {
     const questionText = document.getElementById("question-text");
     const optionsContainer = document.getElementById("options-container");
