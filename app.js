@@ -50,3 +50,29 @@ const quizData = [
         answer: "x === y"
     }
 ];
+
+document.addEventListener("DOMContentLoaded", () => {
+    const questionText = document.getElementById("question-text");
+    const optionsContainer = document.getElementById("options-container");
+
+    function renderFirstQuestion() {
+        const currentQuestion = quizData[0];
+        
+        // Render question text
+        questionText.textContent = currentQuestion.question;
+        
+        // Clear options container
+        optionsContainer.innerHTML = "";
+        
+        // Render option buttons
+        currentQuestion.options.forEach(option => {
+            const button = document.createElement("button");
+            button.classList.add("option-btn");
+            button.textContent = option;
+            optionsContainer.appendChild(button);
+        });
+    }
+
+    renderFirstQuestion();
+});
+
