@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Quiz App</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="app.js" defer></script>
+</head>
+<body>
+    <div class="quiz-container">
+        <main class="quiz-card" id="quiz-card">
+            <header class="quiz-header">
+                <h1 class="quiz-title">Tech Quiz</h1>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+            </header>
+            
+            <section class="quiz-body">
+                <h2 id="question-text" class="question-text">Loading question...</h2>
+                <div id="options-container" class="options-container">
+                    <!-- Options will be dynamically rendered here -->
+                </div>
+            </section>
+            
+            <footer class="quiz-footer">
+                <span id="progress-text" class="progress-text">Question 1 of 5</span>
+                <button id="next-btn" class="btn btn-primary" disabled>Next Question</button>
+            </footer>
+        </main>
+    </div>
+</body>
+</html>
