@@ -87,12 +87,38 @@ document.addEventListener("DOMContentLoaded", () => {
         renderFirstQuestion();
     }
 
+    function checkAnswer(selectedText) {
+        const currentQuestion = quizData[currentQuestionIndex];
+        if (currentQuestion && selectedText === currentQuestion.answer) {
+            runningScore += 1;
+        }
+    }
+
     renderFirstQuestion();
 
     optionsContainer.addEventListener("click", (event) => {
         if (event.target.classList.contains("option-btn")) {
-            console.log(event.target.textContent);
-            nextQuestion();
+            const selectedText = event.target.textContent;
+            console.log(selectedText);
+            checkAnswer(selectedText);
+            
+            // Instantly apply visual feedback classes
+            const currentQuestion = quizData[currentQuestionIndex];
+            const buttons = optionsContainer.querySelectorAll(".option-btn");
+            buttons.forEach(button => {
+                if (button.textContent === currentQuestion.answer) {
+                    button.classList.add("correct");
+                } else if (button === event.target && selectedText !== currentQuestion.answer) {
+                    button.classList.add("incorrect");
+                }
+                // Temporarily disable options
+                button.disabled = true;
+            });
+
+            // Delay next question by 1.5 seconds
+            setTimeout(() => {
+                nextQuestion();
+            }, 1500);
         }
     });
 });

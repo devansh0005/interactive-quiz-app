@@ -194,3 +194,15 @@ body {
         text-align: center;
     }
 }
+
+.option-btn.correct {
+    background-color: var(--success-color) !important;
+    border-color: var(--success-color) !important;
+    color: white !important;
+}
+
+.option-btn.incorrect {
+    background-color: var(--error-color) !important;
+    border-color: var(--error-color) !important;
+    color: white !important;
+}
