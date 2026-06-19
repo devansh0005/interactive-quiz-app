@@ -63,10 +63,18 @@ document.addEventListener("DOMContentLoaded", () => {
         
         if (!currentQuestion) {
             const quizCard = document.getElementById("quiz-card");
+            const scorePercentage = Math.round((runningScore / quizData.length) * 100);
+            const isPassing = scorePercentage >= 80;
+            const feedbackMessage = isPassing ? "Great job! 🌟" : "Try again! 📚";
+            
             quizCard.innerHTML = `
                 <div class="results-view" id="results-view">
-                    <h2 class="results-title">Results</h2>
-                    <p class="results-status">Quiz Completed!</p>
+                    <h2 class="results-title">Quiz Completed!</h2>
+                    <div class="score-container">
+                        <span class="score-percentage">${scorePercentage}%</span>
+                        <p class="score-fraction">You scored ${runningScore} out of ${quizData.length}</p>
+                    </div>
+                    <p class="results-feedback">${feedbackMessage}</p>
                 </div>
             `;
             return;
