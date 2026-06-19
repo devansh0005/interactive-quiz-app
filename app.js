@@ -87,11 +87,20 @@ document.addEventListener("DOMContentLoaded", () => {
         renderFirstQuestion();
     }
 
+    function checkAnswer(selectedText) {
+        const currentQuestion = quizData[currentQuestionIndex];
+        if (currentQuestion && selectedText === currentQuestion.answer) {
+            runningScore += 1;
+        }
+    }
+
     renderFirstQuestion();
 
     optionsContainer.addEventListener("click", (event) => {
         if (event.target.classList.contains("option-btn")) {
-            console.log(event.target.textContent);
+            const selectedText = event.target.textContent;
+            console.log(selectedText);
+            checkAnswer(selectedText);
             nextQuestion();
         }
     });
