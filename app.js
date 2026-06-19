@@ -51,12 +51,21 @@ const quizData = [
     }
 ];
 
+let currentQuestionIndex = 0;
+let runningScore = 0;
+
 document.addEventListener("DOMContentLoaded", () => {
     const questionText = document.getElementById("question-text");
     const optionsContainer = document.getElementById("options-container");
 
     function renderFirstQuestion() {
-        const currentQuestion = quizData[0];
+        const currentQuestion = quizData[currentQuestionIndex];
+        
+        if (!currentQuestion) {
+            questionText.textContent = "Quiz Completed!";
+            optionsContainer.innerHTML = "";
+            return;
+        }
         
         // Render question text
         questionText.textContent = currentQuestion.question;
@@ -73,6 +82,18 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    function nextQuestion() {
+        currentQuestionIndex += 1;
+        renderFirstQuestion();
+    }
+
     renderFirstQuestion();
+
+    optionsContainer.addEventListener("click", (event) => {
+        if (event.target.classList.contains("option-btn")) {
+            console.log(event.target.textContent);
+            nextQuestion();
+        }
+    });
 });
 
