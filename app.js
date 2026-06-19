@@ -101,6 +101,18 @@ document.addEventListener("DOMContentLoaded", () => {
             const selectedText = event.target.textContent;
             console.log(selectedText);
             checkAnswer(selectedText);
+            
+            // Instantly apply visual feedback classes
+            const currentQuestion = quizData[currentQuestionIndex];
+            const buttons = optionsContainer.querySelectorAll(".option-btn");
+            buttons.forEach(button => {
+                if (button.textContent === currentQuestion.answer) {
+                    button.classList.add("correct");
+                } else if (button === event.target && selectedText !== currentQuestion.answer) {
+                    button.classList.add("incorrect");
+                }
+            });
+
             nextQuestion();
         }
     });
