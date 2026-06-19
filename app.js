@@ -111,9 +111,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 } else if (button === event.target && selectedText !== currentQuestion.answer) {
                     button.classList.add("incorrect");
                 }
+                // Temporarily disable options
+                button.disabled = true;
             });
 
-            nextQuestion();
+            // Delay next question by 1.5 seconds
+            setTimeout(() => {
+                nextQuestion();
+            }, 1500);
         }
     });
 });
