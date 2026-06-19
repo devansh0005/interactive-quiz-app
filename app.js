@@ -62,8 +62,13 @@ document.addEventListener("DOMContentLoaded", () => {
         const currentQuestion = quizData[currentQuestionIndex];
         
         if (!currentQuestion) {
-            questionText.textContent = "Quiz Completed!";
-            optionsContainer.innerHTML = "";
+            const quizCard = document.getElementById("quiz-card");
+            quizCard.innerHTML = `
+                <div class="results-view" id="results-view">
+                    <h2 class="results-title">Results</h2>
+                    <p class="results-status">Quiz Completed!</p>
+                </div>
+            `;
             return;
         }
         
